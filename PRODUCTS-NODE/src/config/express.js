@@ -4,15 +4,19 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import { config } from "dotenv";
-import proxy from "express-http-proxy";
+import categoryRouter from "../routes/category.route.js";
+import productRouter from "../routes/product.route.js";
+
 
 config();
 
 const expressApp = express();
 
+
+//TODO: investigar sobre cors
 expressApp.use(
   cors({
-    origin: ["http://localhost:5173", process.env.URL_FRONT],
+    origin: "http://localhost:3000", // Solo permitir llamadas desde http://localhost:3000
     allowedHeaders: [
       "Content-Type",
       "Authorization",
@@ -20,36 +24,18 @@ expressApp.use(
       "pos",
       "confirm",
     ],
-    methods: ["GET", "PUT", "POST", "DELETE"],
-    credentials: true,
+    methods: ["GET", "PUT", "POST", "DELETE"], // Agregamos los métodos permitidos
   })
 );
-
 expressApp.use(bodyParser.urlencoded({ extended: true }));
 expressApp.use(bodyParser.json());
 expressApp.use(cookieParser());
 expressApp.use(morgan("dev"));
 
 //ROUTAS
-expressApp.use(
-  "/api/users",
-  proxy("http://localhost:3001", {
-    proxyReqPathResolver: (req) => `${req.url}`,
-  })
-);
-expressApp.use(
-  "/api/auth",
-  proxy("http://localhost:3002", {
-    proxyReqPathResolver: (req) => `${req.url}`,
-  })
-);
 
-expressApp.use(
-  "/api/product",
-  proxy("http://localhost:3003", {
-    proxyReqPathResolver: (req) => `${req.url}`,
-  })
-);
+expressApp.use('', categoryRouter)
+expressApp.use('', productRouter)
 
 expressApp.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "*");
