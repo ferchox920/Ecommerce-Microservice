@@ -68,9 +68,6 @@ Si deseas contribuir al proyecto, sigue los pasos habituales de fork y pull requ
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-```
-
-Asegúrate de personalizar la información, los nombres de directorios, las rutas y las instrucciones según las características y estructura específicas de tu proyecto. ¡Buena suerte con tu proyecto de e-commerce basado en microservicios!
 
 ## Configuración local del servicio de productos
 
